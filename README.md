@@ -1,4 +1,4 @@
-zaqar-messenger
+Zaqar Messenger
 ===============
 
-http://en.wikipedia.org/wiki/Zaqar
+The name is inspired from the Summerian god, see http://en.wikipedia.org/wiki/Zaqar to know more.
