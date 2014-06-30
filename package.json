@@ -4,7 +4,7 @@
   "description": "Zaqar",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script/register -R spec src/test/coffeescript/*.coffee"
+    "test": "mocha --compilers coffee:coffee-script/register -R spec src/test/coffeescript/*_test.coffee"
   },
   "repository": {
     "type": "git",
