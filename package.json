@@ -14,5 +14,10 @@
   "license": "GNU GPLv3",
   "bugs": {
     "url": "https://github.com/ZaqarCommunity/zaqar-messenger/issues"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.7.1",
+    "mocha": "~1.20.1",
+    "chai": "~1.9.1"
   }
 }
