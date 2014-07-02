@@ -8,7 +8,9 @@ describe "M1: Single page chat client", ->
       "head > title".should.have.text("Single page chat client")
   it "has an input field for messages", ->
     casper.then ->
-      "input#message[type=\"text\"]".should.be.inDOM
+      fieldSelector = "input#message"
+      fieldSelector.should.be.inDOM
+      fieldSelector.should.have.attribute("type").that.deep.equals(["text"])
   it "has a button to send messages", ->
     casper.then ->
       buttonSelector = "input#send"
