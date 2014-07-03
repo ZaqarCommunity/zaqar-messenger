@@ -11,6 +11,7 @@ describe "M1: Single page chat client", ->
       fieldSelector = "form#chat > input#message"
       fieldSelector.should.be.inDOM
       fieldSelector.should.have.attribute("type").that.deep.equals(["text"])
+      fieldSelector.should.have.attribute("name").that.deep.equals(["message"])
   it "has a button to send messages", ->
     casper.then ->
       buttonSelector = "form#chat > input#send"
