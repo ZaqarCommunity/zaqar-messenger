@@ -23,3 +23,6 @@ describe "M1: Single page chat client", ->
       @click("input#send")
       @getFormValues("form#chat").message.should.be.empty
       expect("message").to.have.fieldValue("")
+  xit "has a text area for logging messages", ->
+  xit "appends message to the log when send button is clicked", ->
+  xit "appends nothing when message is empty", ->
