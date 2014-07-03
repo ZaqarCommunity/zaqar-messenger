@@ -29,7 +29,16 @@ describe "M1: Single page chat client", ->
       textAreaSelector = "form#chat > textarea"
       textAreaSelector.should.be.inDOM
       textAreaSelector.should.have.attribute("name").that.deep.equals(["messagesLog"])
-  xit "appends message to the log when send button is clicked", ->
+  it "appends message to the log when send button is clicked", ->
+    casper.then ->
+      @fill("form#chat", {message: "def", messagesLog: "abc"})
+      expect("messagesLog").to.have.fieldValue("abc")
+      expect("message").to.have.fieldValue("def")
+      @click("input#send")
+      expect("messagesLog").to.have.fieldValue("""
+                                               abc
+                                               def
+                                               """)
   it "appends nothing when message is empty", ->
     casper.then ->
       logContentBefore = @getFormValues("form#chat").messagesLog
