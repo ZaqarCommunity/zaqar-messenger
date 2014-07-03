@@ -3,10 +3,8 @@ assert = require('chai').assert
 { ButtonSpy } = require("./ButtonSpy")
 
 suite "SinglePageChatTest", ->
-  test "class exists", ->
-    new SinglePageChat
+  spg = new SinglePageChat
   test "registers sendMessage() for click event", ->
-    spg = new SinglePageChat
     bs = new ButtonSpy
     spg.registerSendMessageEventHandler(bs)
     assert.isFunction(bs.getEventListener())
