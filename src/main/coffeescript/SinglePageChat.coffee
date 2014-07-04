@@ -5,7 +5,7 @@ class SinglePageChat
     @sendButton.addEventListener("click", @sendMessageFromField)
 
   sendMessageFromField: ->
-    @logArea.value += "\n#{@messageField.value}"
+    @logArea.value += "\n#{@messageField.value}" unless @messageField.value.length is 0
     @messageField.value = ""
 
 (exports ? window).SinglePageChat = SinglePageChat

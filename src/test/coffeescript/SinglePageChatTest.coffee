@@ -24,3 +24,10 @@ suite "SinglePageChatTest", ->
                                       message 1
                                       message 2
                                       """)
+  test "sendMessageFromField() should append nothing when message is empty", ->
+    logArea.value = "message 1"
+    messageField.value = ""
+    spg.sendMessageFromField()
+    assert.strictEqual(logArea.value, """
+                                      message 1
+                                      """)
