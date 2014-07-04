@@ -55,3 +55,11 @@ describe "M1: Single page chat client", ->
         expect("message").to.have.fieldValue("")
         @click("input#send")
         expect("messagesLog").to.have.fieldValue(logContentBefore)
+
+  describe "WebRTC connect to self", ->
+    xit "has a connect button", ->
+      casper.then ->
+        buttonSelector = "form#chat > input#connect"
+        buttonSelector.should.be.inDOM
+        buttonSelector.should.have.attribute("type").that.deep.equals(["button"])
+        buttonSelector.should.have.attribute("value").that.deep.equals(["Connect"])
