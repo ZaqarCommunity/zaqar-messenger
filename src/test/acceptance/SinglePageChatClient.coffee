@@ -16,7 +16,7 @@ describe "M1: Single page chat client", ->
     casper.then ->
       buttonSelector = "form#chat > input#send"
       buttonSelector.should.be.inDOM
-      buttonSelector.should.have.attribute("type").that.deep.equals(["reset"])
+      buttonSelector.should.have.attribute("type").that.deep.equals(["button"])
       buttonSelector.should.have.attribute("value").that.deep.equals(["Send"])
   it "clicking send button should clear message field", ->
     casper.then ->
