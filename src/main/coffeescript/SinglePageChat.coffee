@@ -1,6 +1,9 @@
+$ = (id) -> document?.getElementById(id)
+
 class SinglePageChat
-  registerSendMessageEventHandler: (button) ->
-    button.addEventListener("click", @sendMessage)
-  sendMessage: ->
+  constructor: (@sendButton = $("send"), @messageField = $("message")) ->
+    @sendButton.addEventListener("click", @sendMessageFromField)
+
+  sendMessageFromField: ->
 
 (exports ? window).SinglePageChat = SinglePageChat
