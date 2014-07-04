@@ -11,3 +11,7 @@ suite "SinglePageChatTest", ->
     assert.isFunction(bs.getEventListener())
     assert.strictEqual(bs.getEventListener(), spg.sendMessageFromField)
     assert.strictEqual(bs.getEventType(), "click")
+  test "sendMessageFromField() should clear message field's value", ->
+    fs.value = "text message"
+    spg.sendMessageFromField()
+    assert.strictEqual(fs.value, "")

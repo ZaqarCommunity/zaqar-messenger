@@ -5,5 +5,6 @@ class SinglePageChat
     @sendButton.addEventListener("click", @sendMessageFromField)
 
   sendMessageFromField: ->
+    @messageField.value = ""
 
 (exports ? window).SinglePageChat = SinglePageChat
