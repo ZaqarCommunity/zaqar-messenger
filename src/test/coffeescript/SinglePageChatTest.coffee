@@ -6,7 +6,8 @@ assert = require('chai').assert
 suite "SinglePageChatTest", ->
   sendButton = new ButtonSpy
   messageField = new FieldSpy
-  spg = new SinglePageChat(sendButton, messageField)
+  logArea = new FieldSpy
+  spg = new SinglePageChat(sendButton, messageField, logArea)
   test "constructor registers sendMessageFromField() for click event", ->
     assert.isFunction(sendButton.getEventListener())
     assert.strictEqual(sendButton.getEventListener(), spg.sendMessageFromField)
@@ -15,3 +16,11 @@ suite "SinglePageChatTest", ->
     messageField.value = "text message"
     spg.sendMessageFromField()
     assert.strictEqual(messageField.value, "")
+  test "sendMessageFromField() should append message to log", ->
+    logArea.value = "message 1"
+    messageField.value = "message 2"
+    spg.sendMessageFromField()
+    assert.strictEqual(logArea.value, """
+                                      message 1
+                                      message 2
+                                      """)
