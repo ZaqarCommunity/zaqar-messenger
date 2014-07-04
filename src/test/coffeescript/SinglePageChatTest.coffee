@@ -4,14 +4,14 @@ assert = require('chai').assert
 { FieldSpy } = require("./FieldSpy")
 
 suite "SinglePageChatTest", ->
-  bs = new ButtonSpy
-  fs = new FieldSpy
-  spg = new SinglePageChat(bs, fs)
+  sendButton = new ButtonSpy
+  messageField = new FieldSpy
+  spg = new SinglePageChat(sendButton, messageField)
   test "constructor registers sendMessageFromField() for click event", ->
-    assert.isFunction(bs.getEventListener())
-    assert.strictEqual(bs.getEventListener(), spg.sendMessageFromField)
-    assert.strictEqual(bs.getEventType(), "click")
+    assert.isFunction(sendButton.getEventListener())
+    assert.strictEqual(sendButton.getEventListener(), spg.sendMessageFromField)
+    assert.strictEqual(sendButton.getEventType(), "click")
   test "sendMessageFromField() should clear message field's value", ->
-    fs.value = "text message"
+    messageField.value = "text message"
     spg.sendMessageFromField()
-    assert.strictEqual(fs.value, "")
+    assert.strictEqual(messageField.value, "")
