@@ -21,6 +21,8 @@ class PeerConnectionWrapper
   constructor: (@localPeerConnection, @remotePeerConnection) ->
     @localPeerConnection.onicecandidate = @signalIceCandidate
 
-  signalIceCandidate: ->
+  signalIceCandidate: (event) =>
+    if (event.candidate)
+      @remotePeerConnection.addIceCandidate(event.candidate)
 
 (exports ? window).PeerConnectionWrapper = PeerConnectionWrapper

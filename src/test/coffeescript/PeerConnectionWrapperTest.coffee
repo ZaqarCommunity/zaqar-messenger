@@ -28,7 +28,16 @@ suite "PeerConnectionWrapperTest", ->
   test "should wrap both local and remote RTCPeerConnection instances", ->
     assert.propertyVal(pc, "localPeerConnection", localConnectionSpy)
     assert.propertyVal(pc, "remotePeerConnection", remoteConnectionSpy)
-  test "sets its own function as onicecandidate event handler", ->
+  test "should set its own function as onicecandidate event handler", ->
     assert.isFunction(localConnectionSpy.onicecandidate)
     assert.isFunction(pc.signalIceCandidate)
     assert.deepEqual(pc.signalIceCandidate, localConnectionSpy.onicecandidate)
+  test "signalIceCandidate should call addIceCandidate on remote connection only when event has candidate attribute", ->
+    pc.signalIceCandidate({blah: "blah"})
+    assert.strictEqual(remoteConnectionSpy.addIceCandidateCalls, 0)
+    pc.signalIceCandidate({candidate: "candidate"})
+    assert.strictEqual(remoteConnectionSpy.addIceCandidateCalls, 1)
+  test "signalIceCandidate should call addIceCandidate with candidate", ->
+    event = {candidate: "candidate"}
+    pc.signalIceCandidate(event)
+    assert.strictEqual(remoteConnectionSpy.addIceCandidateArgument, event.candidate)
