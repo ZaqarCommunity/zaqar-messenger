@@ -22,11 +22,13 @@ assert = require('chai').assert
 { RTCPeerConnectionSpy } = require("./RTCPeerConnectionSpy")
 
 suite "PeerConnectionWrapperTest", ->
-  pcSpy = new RTCPeerConnectionSpy
-  pc = new PeerConnectionWrapper(pcSpy)
-  test "wraps RTCPeerConnection instance", ->
-    assert.propertyVal(pc, "wrappedPeerConnection", pcSpy)
+  localConnectionSpy = new RTCPeerConnectionSpy()
+  remoteConnectionSpy = new RTCPeerConnectionSpy()
+  pc = new PeerConnectionWrapper(localConnectionSpy, remoteConnectionSpy)
+  test "should wrap both local and remote RTCPeerConnection instances", ->
+    assert.propertyVal(pc, "localPeerConnection", localConnectionSpy)
+    assert.propertyVal(pc, "remotePeerConnection", remoteConnectionSpy)
   test "sets its own function as onicecandidate event handler", ->
-    assert.isFunction(pcSpy.onicecandidate)
+    assert.isFunction(localConnectionSpy.onicecandidate)
     assert.isFunction(pc.signalIceCandidate)
-    assert.deepEqual(pc.signalIceCandidate, pcSpy.onicecandidate)
+    assert.deepEqual(pc.signalIceCandidate, localConnectionSpy.onicecandidate)

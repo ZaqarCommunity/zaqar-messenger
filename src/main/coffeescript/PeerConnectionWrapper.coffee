@@ -18,8 +18,8 @@ along with Zaquar Messenger.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
 class PeerConnectionWrapper
-  constructor: (@wrappedPeerConnection) ->
-    @wrappedPeerConnection.onicecandidate = @signalIceCandidate
+  constructor: (@localPeerConnection, @remotePeerConnection) ->
+    @localPeerConnection.onicecandidate = @signalIceCandidate
 
   signalIceCandidate: ->
 
