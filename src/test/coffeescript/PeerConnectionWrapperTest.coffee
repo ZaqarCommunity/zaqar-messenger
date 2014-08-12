@@ -20,6 +20,7 @@ along with Zaquar Messenger.  If not, see <http://www.gnu.org/licenses/>.
 assert = require('chai').assert
 { PeerConnectionWrapper } = require("../../main/coffeescript/PeerConnectionWrapper")
 { RTCPeerConnectionSpy } = require("./RTCPeerConnectionSpy")
+{ DataChannelSpy } = require("./DataChannelSpy")
 
 suite "PeerConnectionWrapperTest", ->
   localConnectionSpy = remoteConnectionSpy = pcw = null
@@ -89,3 +90,16 @@ suite "PeerConnectionWrapperTest", ->
       pcw.sendAnswer(sdp)
       assert.strictEqual(localConnectionSpy.setRemoteDescriptionCalls, 1)
       assert.strictEqual(localConnectionSpy.setRemoteDescriptionArgument, sdp)
+
+  suite "send/receive messages", ->
+    test "receiveMessage should print message data", ->
+      messageEvent = {data: "test message"}
+      pcw.receiveMessage(messageEvent)
+      #TODO Mock console.log() and assert this
+    test "sendMessage should call send on data channel", ->
+      dataChannelSpy = new DataChannelSpy()
+      channelEvent = {channel: dataChannelSpy}
+      pcw.setupDataChannel(channelEvent)
+      pcw.sendMessage("test message")
+      assert.strictEqual(dataChannelSpy.sendCalls, 1)
+      assert.strictEqual(dataChannelSpy.sendArgument, "test message")

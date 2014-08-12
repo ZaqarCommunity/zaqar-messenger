@@ -30,7 +30,11 @@ class PeerConnectionWrapper
     @dataChannel = event.channel
     @dataChannel.onmessage = @receiveMessage
 
-  receiveMessage: ->
+  receiveMessage: (event) =>
+    console.log("received message: #{event.data}")
+
+  sendMessage: (text) =>
+    @dataChannel.send(text)
 
   sendOffer: (sessionDescription) =>
     @localPeerConnection.setLocalDescription(sessionDescription)
