@@ -32,10 +32,14 @@ suite "PeerConnectionWrapperTest", ->
   test "should wrap both local and remote RTCPeerConnection instances", ->
     assert.propertyVal(pcw, "localPeerConnection", localConnectionSpy)
     assert.propertyVal(pcw, "remotePeerConnection", remoteConnectionSpy)
-  test "should set its own function as onicecandidate event handler", ->
+  test "should set its own function as onicecandidate event handler on local connection", ->
     assert.isFunction(localConnectionSpy.onicecandidate)
     assert.isFunction(pcw.signalIceCandidate)
     assert.deepEqual(pcw.signalIceCandidate, localConnectionSpy.onicecandidate)
+  test "should set its own function as ondatachannel event handler on local connection", ->
+    assert.isFunction(localConnectionSpy.ondatachannel)
+    assert.isFunction(pcw.setupDataChannel)
+    assert.deepEqual(pcw.setupDataChannel, localConnectionSpy.ondatachannel)
 
   suite "signalIceCandidate", ->
     candidateEvent = {candidate: "candidate"}
@@ -49,6 +53,17 @@ suite "PeerConnectionWrapperTest", ->
     test "should call addIceCandidate with candidate in event", ->
       pcw.signalIceCandidate(candidateEvent)
       assert.strictEqual(remoteConnectionSpy.addIceCandidateArgument, candidateEvent.candidate)
+
+  suite "setupDataChannel", ->
+    channelEvent = {channel: {onmessage: "empty"}}
+
+    test "should set data channel to the one received", ->
+      pcw.setupDataChannel(channelEvent)
+      assert.deepEqual(pcw.dataChannel, channelEvent.channel)
+    test "should set its own function as onmessage event handler on data channel", ->
+      pcw.setupDataChannel(channelEvent)
+      assert.isFunction(pcw.dataChannel.onmessage)
+      assert.deepEqual(pcw.dataChannel.onmessage, pcw.receiveMessage)
 
   suite "sendOffer", ->
     test "should call setLocalDescription on local connection", ->

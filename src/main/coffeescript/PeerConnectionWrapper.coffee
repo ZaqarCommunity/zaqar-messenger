@@ -20,10 +20,17 @@ along with Zaquar Messenger.  If not, see <http://www.gnu.org/licenses/>.
 class PeerConnectionWrapper
   constructor: (@localPeerConnection, @remotePeerConnection) ->
     @localPeerConnection.onicecandidate = @signalIceCandidate
+    @localPeerConnection.ondatachannel = @setupDataChannel
 
   signalIceCandidate: (event) =>
     if (event.candidate)
       @remotePeerConnection.addIceCandidate(event.candidate)
+
+  setupDataChannel: (event) =>
+    @dataChannel = event.channel
+    @dataChannel.onmessage = @receiveMessage
+
+  receiveMessage: ->
 
   sendOffer: (sessionDescription) =>
     @localPeerConnection.setLocalDescription(sessionDescription)
