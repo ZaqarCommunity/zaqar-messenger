@@ -23,6 +23,7 @@ assert = require('chai').assert
 
 suite "PeerConnectionWrapperTest", ->
   localConnectionSpy = remoteConnectionSpy = pcw = null
+  sdp = {sdp: "session description"}
   setup ->
     localConnectionSpy = new RTCPeerConnectionSpy()
     remoteConnectionSpy = new RTCPeerConnectionSpy()
@@ -50,10 +51,6 @@ suite "PeerConnectionWrapperTest", ->
       assert.strictEqual(remoteConnectionSpy.addIceCandidateArgument, candidateEvent.candidate)
 
   suite "sendOffer", ->
-    sdp = null
-    setup ->
-      sdp = {sdp: "session description"}
-
     test "should call setLocalDescription on local connection", ->
       pcw.sendOffer(sdp)
       assert.strictEqual(localConnectionSpy.setLocalDescriptionCalls, 1)
@@ -67,3 +64,13 @@ suite "PeerConnectionWrapperTest", ->
       assert.strictEqual(remoteConnectionSpy.createAnswerCalls, 1)
       assert.isFunction(remoteConnectionSpy.createAnswerArgument)
       assert.deepEqual(remoteConnectionSpy.createAnswerArgument, pcw.sendAnswer)
+
+  suite "sendAnswer", ->
+    test "should call setLocalDescription on remote connection", ->
+      pcw.sendAnswer(sdp)
+      assert.strictEqual(remoteConnectionSpy.setLocalDescriptionCalls, 1)
+      assert.strictEqual(remoteConnectionSpy.setLocalDescriptionArgument, sdp)
+    test "should call setRemoteDescription on local connection", ->
+      pcw.sendAnswer(sdp)
+      assert.strictEqual(localConnectionSpy.setRemoteDescriptionCalls, 1)
+      assert.strictEqual(localConnectionSpy.setRemoteDescriptionArgument, sdp)

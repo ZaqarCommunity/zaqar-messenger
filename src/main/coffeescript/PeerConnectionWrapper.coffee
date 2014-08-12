@@ -30,6 +30,8 @@ class PeerConnectionWrapper
     @remotePeerConnection.setRemoteDescription(sessionDescription)
     @remotePeerConnection.createAnswer(@sendAnswer)
 
-  sendAnswer: =>
+  sendAnswer: (sessionDescription) =>
+    @remotePeerConnection.setLocalDescription(sessionDescription)
+    @localPeerConnection.setRemoteDescription(sessionDescription)
 
 (exports ? window).PeerConnectionWrapper = PeerConnectionWrapper
