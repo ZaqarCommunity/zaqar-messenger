@@ -103,3 +103,14 @@ suite "PeerConnectionWrapperTest", ->
       pcw.sendMessage("test message")
       assert.strictEqual(dataChannelSpy.sendCalls, 1)
       assert.strictEqual(dataChannelSpy.sendArgument, "test message")
+
+  suite "connectPeers", ->
+    test "should call createDataChannel on local connection with channel name", ->
+      pcw.connectPeers()
+      assert.strictEqual(localConnectionSpy.createDataChannelCalls, 1)
+      assert.strictEqual(localConnectionSpy.createDataChannelArgument, "chat")
+    test "should call createOffer on local connection with callback", ->
+      pcw.connectPeers()
+      assert.strictEqual(localConnectionSpy.createOfferCalls, 1)
+      assert.isFunction(localConnectionSpy.createOfferArgument)
+      assert.deepEqual(localConnectionSpy.createOfferArgument, pcw.sendOffer)

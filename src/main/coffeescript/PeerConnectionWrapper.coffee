@@ -45,4 +45,8 @@ class PeerConnectionWrapper
     @remotePeerConnection.setLocalDescription(sessionDescription)
     @localPeerConnection.setRemoteDescription(sessionDescription)
 
+  connectPeers: =>
+    @localPeerConnection.createDataChannel("chat")
+    @localPeerConnection.createOffer(@sendOffer)
+
 (exports ? window).PeerConnectionWrapper = PeerConnectionWrapper

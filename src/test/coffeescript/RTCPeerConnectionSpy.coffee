@@ -21,7 +21,9 @@ class RTCPeerConnectionSpy
   addIceCandidateCalls: 0
   setLocalDescriptionCalls: 0
   setRemoteDescriptionCalls: 0
+  createOfferCalls: 0
   createAnswerCalls: 0
+  createDataChannelCalls: 0
 
   addIceCandidate: (arg) ->
     @addIceCandidateCalls += 1
@@ -35,8 +37,16 @@ class RTCPeerConnectionSpy
     @setRemoteDescriptionCalls += 1
     @setRemoteDescriptionArgument = arg
 
+  createOffer: (arg) ->
+    @createOfferCalls += 1
+    @createOfferArgument = arg
+
   createAnswer: (arg) ->
     @createAnswerCalls += 1
     @createAnswerArgument = arg
+
+  createDataChannel: (arg) ->
+    @createDataChannelCalls += 1
+    @createDataChannelArgument = arg
 
 (exports ? window).RTCPeerConnectionSpy = RTCPeerConnectionSpy
