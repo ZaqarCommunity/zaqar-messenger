@@ -22,16 +22,29 @@ PeerConnectionWrapper = require("../../main/coffeescript/PeerConnectionWrapper")
 SinglePageChat = require("../../main/coffeescript/SinglePageChat")
 ButtonSpy = require("./ButtonSpy")
 FieldSpy = require("./FieldSpy")
+RTCPeerConnectionSpy = require("./RTCPeerConnectionSpy")
 
 suite "SinglePageChatTest", ->
   sendButton = new ButtonSpy
+  connectButton = new ButtonSpy
   messageField = new FieldSpy
   logArea = new FieldSpy
-  spg = new SinglePageChat(sendButton, messageField, logArea)
+  spg = new SinglePageChat(sendButton, connectButton, messageField, logArea)
   test "constructor registers sendMessageFromField() for click event", ->
     assert.isFunction(sendButton.getEventListener())
     assert.strictEqual(sendButton.getEventListener(), spg.sendMessageFromField)
     assert.strictEqual(sendButton.getEventType(), "click")
+  test "constructor registers connect() for click event", ->
+    assert.isFunction(connectButton.getEventListener())
+    assert.strictEqual(connectButton.getEventListener(), spg.connect)
+    assert.strictEqual(connectButton.getEventType(), "click")
+  test "constructor should create two connection wrappers around two RTCPeerConnections", ->
+    assert.instanceOf(spg.localPeer, PeerConnectionWrapper)
+    assert.instanceOf(spg.remotePeer, PeerConnectionWrapper)
+    assert.instanceOf(spg.localPeer.localPeerConnection, RTCPeerConnectionSpy)
+    assert.instanceOf(spg.localPeer.remotePeerConnection, RTCPeerConnectionSpy)
+    assert.instanceOf(spg.remotePeer.localPeerConnection, RTCPeerConnectionSpy)
+    assert.instanceOf(spg.remotePeer.remotePeerConnection, RTCPeerConnectionSpy)
   test "sendMessageFromField() should clear message field's value", ->
     messageField.value = "text message"
     spg.sendMessageFromField()
@@ -51,3 +64,5 @@ suite "SinglePageChatTest", ->
     assert.strictEqual(logArea.value, """
                                       message 1
                                       """)
+  test "begins in not connected state", ->
+    assert.isFalse(spg.isConnected())

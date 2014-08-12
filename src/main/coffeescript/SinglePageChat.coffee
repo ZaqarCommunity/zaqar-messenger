@@ -19,12 +19,26 @@ along with Zaquar Messenger.  If not, see <http://www.gnu.org/licenses/>.
 
 $ = (id) -> document?.getElementById(id)
 
+PeerConnectionWrapper = require("./PeerConnectionWrapper")
+RTCPeerConnection = window?.RTCPeerConnection or window?.webkitRTCPeerConnection or window?.mozRTCPeerConnection or require("../../test/coffeescript/RTCPeerConnectionSpy")
+
 class SinglePageChat
-  constructor: (@sendButton = $("send"), @messageField = $("message"), @logArea = $("messagesLog")) ->
+  constructor: (@sendButton = $("send"), @connectButton = $("connect"), @messageField = $("message"), @logArea = $("messagesLog")) ->
     @sendButton.addEventListener("click", @sendMessageFromField)
+    @connectButton.addEventListener("click", @connect)
+    @connected = false
+    lp = new RTCPeerConnection(null)
+    rp = new RTCPeerConnection(null)
+    @localPeer = new PeerConnectionWrapper(lp, rp)
+    @remotePeer = new PeerConnectionWrapper(rp, lp)
 
   sendMessageFromField: =>
     @logArea.value += "\n#{@messageField.value}" unless @messageField.value.length is 0
     @messageField.value = ""
+
+  connect: =>
+
+  isConnected: =>
+    @connected
 
 module.exports = SinglePageChat
