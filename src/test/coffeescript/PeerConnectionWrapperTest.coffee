@@ -37,12 +37,12 @@ suite "PeerConnectionWrapperTest", ->
     assert.deepEqual(pcw.signalIceCandidate, localConnectionSpy.onicecandidate)
 
   suite "signalIceCandidate", ->
-    test "signalIceCandidate should call addIceCandidate on remote connection only when event has candidate attribute", ->
+    test "should call addIceCandidate on remote connection only when event has candidate attribute", ->
       pcw.signalIceCandidate({blah: "blah"})
       assert.strictEqual(remoteConnectionSpy.addIceCandidateCalls, 0)
       pcw.signalIceCandidate({candidate: "candidate"})
       assert.strictEqual(remoteConnectionSpy.addIceCandidateCalls, 1)
-    test "signalIceCandidate should call addIceCandidate with candidate", ->
+    test "should call addIceCandidate with candidate", ->
       event = {candidate: "candidate"}
       pcw.signalIceCandidate(event)
       assert.strictEqual(remoteConnectionSpy.addIceCandidateArgument, event.candidate)
@@ -52,15 +52,15 @@ suite "PeerConnectionWrapperTest", ->
     setup ->
       sdp = {sdp: "session description"}
 
-    test "sendOffer should call setLocalDescription on local connection", ->
+    test "should call setLocalDescription on local connection", ->
       pcw.sendOffer(sdp)
       assert.strictEqual(localConnectionSpy.setLocalDescriptionCalls, 1)
       assert.strictEqual(localConnectionSpy.setLocalDescriptionArgument, sdp)
-    test "sendOffer should call setRemoteDescription on remote connection", ->
+    test "should call setRemoteDescription on remote connection", ->
       pcw.sendOffer(sdp)
       assert.strictEqual(remoteConnectionSpy.setRemoteDescriptionCalls, 1)
       assert.strictEqual(remoteConnectionSpy.setRemoteDescriptionArgument, sdp)
-    test "sendOffer should call createAnswer on remote connection", ->
+    test "should call createAnswer on remote connection", ->
       pcw.sendOffer(sdp)
       assert.strictEqual(remoteConnectionSpy.createAnswerCalls, 1)
       assert.isFunction(remoteConnectionSpy.createAnswerArgument)
