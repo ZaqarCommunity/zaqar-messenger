@@ -22,39 +22,39 @@ assert = require('chai').assert
 { RTCPeerConnectionSpy } = require("./RTCPeerConnectionSpy")
 
 suite "PeerConnectionWrapperTest", ->
-  localConnectionSpy = remoteConnectionSpy = pc = null
+  localConnectionSpy = remoteConnectionSpy = pcw = null
   setup ->
     localConnectionSpy = new RTCPeerConnectionSpy()
     remoteConnectionSpy = new RTCPeerConnectionSpy()
-    pc = new PeerConnectionWrapper(localConnectionSpy, remoteConnectionSpy)
+    pcw = new PeerConnectionWrapper(localConnectionSpy, remoteConnectionSpy)
 
   test "should wrap both local and remote RTCPeerConnection instances", ->
-    assert.propertyVal(pc, "localPeerConnection", localConnectionSpy)
-    assert.propertyVal(pc, "remotePeerConnection", remoteConnectionSpy)
+    assert.propertyVal(pcw, "localPeerConnection", localConnectionSpy)
+    assert.propertyVal(pcw, "remotePeerConnection", remoteConnectionSpy)
   test "should set its own function as onicecandidate event handler", ->
     assert.isFunction(localConnectionSpy.onicecandidate)
-    assert.isFunction(pc.signalIceCandidate)
-    assert.deepEqual(pc.signalIceCandidate, localConnectionSpy.onicecandidate)
+    assert.isFunction(pcw.signalIceCandidate)
+    assert.deepEqual(pcw.signalIceCandidate, localConnectionSpy.onicecandidate)
 
   suite "signalIceCandidate", ->
     test "signalIceCandidate should call addIceCandidate on remote connection only when event has candidate attribute", ->
-      pc.signalIceCandidate({blah: "blah"})
+      pcw.signalIceCandidate({blah: "blah"})
       assert.strictEqual(remoteConnectionSpy.addIceCandidateCalls, 0)
-      pc.signalIceCandidate({candidate: "candidate"})
+      pcw.signalIceCandidate({candidate: "candidate"})
       assert.strictEqual(remoteConnectionSpy.addIceCandidateCalls, 1)
     test "signalIceCandidate should call addIceCandidate with candidate", ->
       event = {candidate: "candidate"}
-      pc.signalIceCandidate(event)
+      pcw.signalIceCandidate(event)
       assert.strictEqual(remoteConnectionSpy.addIceCandidateArgument, event.candidate)
 
   suite "sendOffer", ->
     test "sendOffer should call setLocalDescription on local connection", ->
       sdp = {sdp: "session description"}
-      pc.sendOffer(sdp)
+      pcw.sendOffer(sdp)
       assert.strictEqual(localConnectionSpy.setLocalDescriptionCalls, 1)
       assert.strictEqual(localConnectionSpy.setLocalDescriptionArgument, sdp)
     test "sendOffer should call setRemoteDescription on remote connection", ->
       sdp = {sdp: "session description"}
-      pc.sendOffer(sdp)
+      pcw.sendOffer(sdp)
       assert.strictEqual(remoteConnectionSpy.setRemoteDescriptionCalls, 1)
       assert.strictEqual(remoteConnectionSpy.setRemoteDescriptionArgument, sdp)
