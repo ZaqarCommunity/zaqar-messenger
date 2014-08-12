@@ -18,9 +18,10 @@ along with Zaquar Messenger.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
 assert = require('chai').assert
-{ SinglePageChat } = require("../../main/coffeescript/SinglePageChat")
-{ ButtonSpy } = require("./ButtonSpy")
-{ FieldSpy } = require("./FieldSpy")
+PeerConnectionWrapper = require("../../main/coffeescript/PeerConnectionWrapper")
+SinglePageChat = require("../../main/coffeescript/SinglePageChat")
+ButtonSpy = require("./ButtonSpy")
+FieldSpy = require("./FieldSpy")
 
 suite "SinglePageChatTest", ->
   sendButton = new ButtonSpy

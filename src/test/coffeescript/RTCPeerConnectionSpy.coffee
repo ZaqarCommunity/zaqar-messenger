@@ -49,4 +49,4 @@ class RTCPeerConnectionSpy
     @createDataChannelCalls += 1
     @createDataChannelArgument = arg
 
-(exports ? window).RTCPeerConnectionSpy = RTCPeerConnectionSpy
+module.exports = RTCPeerConnectionSpy

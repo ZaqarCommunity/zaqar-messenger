@@ -18,9 +18,9 @@ along with Zaquar Messenger.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
 assert = require('chai').assert
-{ PeerConnectionWrapper } = require("../../main/coffeescript/PeerConnectionWrapper")
-{ RTCPeerConnectionSpy } = require("./RTCPeerConnectionSpy")
-{ DataChannelSpy } = require("./DataChannelSpy")
+PeerConnectionWrapper = require("../../main/coffeescript/PeerConnectionWrapper")
+RTCPeerConnectionSpy = require("./RTCPeerConnectionSpy")
+DataChannelSpy = require("./DataChannelSpy")
 
 suite "PeerConnectionWrapperTest", ->
   localConnectionSpy = remoteConnectionSpy = pcw = null

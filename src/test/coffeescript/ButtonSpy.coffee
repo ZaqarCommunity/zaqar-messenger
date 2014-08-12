@@ -24,4 +24,4 @@ class ButtonSpy
     @eventType = type
     @eventListener = listener
 
-(exports ? window).ButtonSpy = ButtonSpy
+module.exports = ButtonSpy

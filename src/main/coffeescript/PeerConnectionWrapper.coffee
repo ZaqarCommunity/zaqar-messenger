@@ -49,4 +49,4 @@ class PeerConnectionWrapper
     @localPeerConnection.createDataChannel("chat")
     @localPeerConnection.createOffer(@sendOffer)
 
-(exports ? window).PeerConnectionWrapper = PeerConnectionWrapper
+module.exports = PeerConnectionWrapper

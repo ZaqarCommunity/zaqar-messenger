@@ -24,4 +24,4 @@ class DataChannelSpy
     @sendCalls += 1
     @sendArgument = arg
 
-(exports ? window).DataChannelSpy = DataChannelSpy
+module.exports = DataChannelSpy

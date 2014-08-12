@@ -20,4 +20,4 @@ along with Zaquar Messenger.  If not, see <http://www.gnu.org/licenses/>.
 class FieldSpy
   value: ""
 
-(exports ? window).FieldSpy = FieldSpy
+module.exports = FieldSpy

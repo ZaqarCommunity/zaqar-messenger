@@ -27,4 +27,4 @@ class SinglePageChat
     @logArea.value += "\n#{@messageField.value}" unless @messageField.value.length is 0
     @messageField.value = ""
 
-(exports ? window).SinglePageChat = SinglePageChat
+module.exports = SinglePageChat
