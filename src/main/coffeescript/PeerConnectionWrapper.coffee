@@ -25,4 +25,8 @@ class PeerConnectionWrapper
     if (event.candidate)
       @remotePeerConnection.addIceCandidate(event.candidate)
 
+  sendOffer: (sessionDescription) =>
+    @localPeerConnection.setLocalDescription(sessionDescription)
+    @remotePeerConnection.setRemoteDescription(sessionDescription)
+
 (exports ? window).PeerConnectionWrapper = PeerConnectionWrapper

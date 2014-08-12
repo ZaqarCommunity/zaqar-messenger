@@ -19,9 +19,19 @@ along with Zaquar Messenger.  If not, see <http://www.gnu.org/licenses/>.
 
 class RTCPeerConnectionSpy
   addIceCandidateCalls: 0
+  setLocalDescriptionCalls: 0
+  setRemoteDescriptionCalls: 0
 
   addIceCandidate: (arg) ->
     @addIceCandidateCalls += 1
     @addIceCandidateArgument = arg
+
+  setLocalDescription: (arg) ->
+    @setLocalDescriptionCalls += 1
+    @setLocalDescriptionArgument = arg
+
+  setRemoteDescription: (arg) ->
+    @setRemoteDescriptionCalls += 1
+    @setRemoteDescriptionArgument = arg
 
 (exports ? window).RTCPeerConnectionSpy = RTCPeerConnectionSpy
