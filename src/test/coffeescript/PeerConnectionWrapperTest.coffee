@@ -37,15 +37,17 @@ suite "PeerConnectionWrapperTest", ->
     assert.deepEqual(pcw.signalIceCandidate, localConnectionSpy.onicecandidate)
 
   suite "signalIceCandidate", ->
+    candidateEvent = {candidate: "candidate"}
+    nonCandidateEvent = {blah: "blah"}
+
     test "should call addIceCandidate on remote connection only when event has candidate attribute", ->
-      pcw.signalIceCandidate({blah: "blah"})
+      pcw.signalIceCandidate(nonCandidateEvent)
       assert.strictEqual(remoteConnectionSpy.addIceCandidateCalls, 0)
-      pcw.signalIceCandidate({candidate: "candidate"})
+      pcw.signalIceCandidate(candidateEvent)
       assert.strictEqual(remoteConnectionSpy.addIceCandidateCalls, 1)
-    test "should call addIceCandidate with candidate", ->
-      event = {candidate: "candidate"}
-      pcw.signalIceCandidate(event)
-      assert.strictEqual(remoteConnectionSpy.addIceCandidateArgument, event.candidate)
+    test "should call addIceCandidate with candidate in event", ->
+      pcw.signalIceCandidate(candidateEvent)
+      assert.strictEqual(remoteConnectionSpy.addIceCandidateArgument, candidateEvent.candidate)
 
   suite "sendOffer", ->
     sdp = null
