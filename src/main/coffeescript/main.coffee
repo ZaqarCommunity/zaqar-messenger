@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<!--
+###
 Copyright 2014 Etienne Dysli Metref
 
 This file is part of Zaquar Messenger.
@@ -16,20 +15,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with Zaquar Messenger.  If not, see <http://www.gnu.org/licenses/>.
--->
+###
 
-<html>
-<head>
-<meta charset="utf-8">
-<title>Single page chat client</title>
-</head>
-<body>
-<form id="chat">
-<textarea id="messagesLog" name="messagesLog"></textarea>
-<input id="message" name="message" type="text"/>
-<input id="send" type="button" value="Send"/>
-<input id="connect" type="button" value="Connect"/>
-</form>
-<script src="bundle.js" type="text/javascript"></script>
-</body>
-</html>
+SinglePageChat = require("./SinglePageChat")
+new SinglePageChat
