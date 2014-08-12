@@ -48,13 +48,20 @@ suite "PeerConnectionWrapperTest", ->
       assert.strictEqual(remoteConnectionSpy.addIceCandidateArgument, event.candidate)
 
   suite "sendOffer", ->
-    test "sendOffer should call setLocalDescription on local connection", ->
+    sdp = null
+    setup ->
       sdp = {sdp: "session description"}
+
+    test "sendOffer should call setLocalDescription on local connection", ->
       pcw.sendOffer(sdp)
       assert.strictEqual(localConnectionSpy.setLocalDescriptionCalls, 1)
       assert.strictEqual(localConnectionSpy.setLocalDescriptionArgument, sdp)
     test "sendOffer should call setRemoteDescription on remote connection", ->
-      sdp = {sdp: "session description"}
       pcw.sendOffer(sdp)
       assert.strictEqual(remoteConnectionSpy.setRemoteDescriptionCalls, 1)
       assert.strictEqual(remoteConnectionSpy.setRemoteDescriptionArgument, sdp)
+    test "sendOffer should call createAnswer on remote connection", ->
+      pcw.sendOffer(sdp)
+      assert.strictEqual(remoteConnectionSpy.createAnswerCalls, 1)
+      assert.isFunction(remoteConnectionSpy.createAnswerArgument)
+      assert.deepEqual(remoteConnectionSpy.createAnswerArgument, pcw.sendAnswer)
