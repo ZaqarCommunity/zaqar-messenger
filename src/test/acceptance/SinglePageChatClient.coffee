@@ -76,7 +76,7 @@ describe "M1: Single page chat client", ->
         expect("messagesLog").to.have.fieldValue(logContentBefore)
 
   describe "WebRTC connect to self", ->
-    xit "has a connect button", ->
+    it "has a connect button", ->
       casper.then ->
         buttonSelector = "form#chat > input#connect"
         buttonSelector.should.be.inDOM
