@@ -39,7 +39,7 @@ class PeerConnectionWrapper
   sendOffer: (sessionDescription) =>
     @localPeerConnection.setLocalDescription(sessionDescription, @successCallback, @failureCallback)
     @remotePeerConnection.setRemoteDescription(sessionDescription, @successCallback, @failureCallback)
-    @remotePeerConnection.createAnswer(@sendAnswer)
+    @remotePeerConnection.createAnswer(@sendAnswer, @failureCallback)
 
   sendAnswer: (sessionDescription) =>
     @remotePeerConnection.setLocalDescription(sessionDescription, @successCallback, @failureCallback)

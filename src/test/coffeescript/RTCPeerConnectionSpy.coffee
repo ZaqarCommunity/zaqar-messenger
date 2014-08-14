@@ -41,9 +41,9 @@ class RTCPeerConnectionSpy
     @createOfferCalls += 1
     @createOfferArgument = arg
 
-  createAnswer: (arg) ->
+  createAnswer: (args...) ->
     @createAnswerCalls += 1
-    @createAnswerArgument = arg
+    @createAnswerArgument = args
 
   createDataChannel: (arg) ->
     @createDataChannelCalls += 1

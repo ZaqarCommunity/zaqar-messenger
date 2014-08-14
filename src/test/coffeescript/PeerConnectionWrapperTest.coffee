@@ -80,11 +80,11 @@ suite "PeerConnectionWrapperTest", ->
       pcw.sendOffer(sdp)
       assert.strictEqual(remoteConnectionSpy.setRemoteDescriptionCalls, 1)
       assert.deepEqual(remoteConnectionSpy.setRemoteDescriptionArgument, [sdp, pcw.successCallback, pcw.failureCallback])
-    test "should call createAnswer on remote connection", ->
+    test "should call createAnswer on remote connection with callbacks", ->
       pcw.sendOffer(sdp)
       assert.strictEqual(remoteConnectionSpy.createAnswerCalls, 1)
-      assert.isFunction(remoteConnectionSpy.createAnswerArgument)
-      assert.deepEqual(remoteConnectionSpy.createAnswerArgument, pcw.sendAnswer)
+      assert.isFunction(arg) for arg in remoteConnectionSpy.createAnswerArgument
+      assert.deepEqual(remoteConnectionSpy.createAnswerArgument, [pcw.sendAnswer, pcw.failureCallback])
 
   suite "sendAnswer", ->
     test "should call setLocalDescription on remote connection", ->
