@@ -49,6 +49,12 @@ class PeerConnectionWrapper
     @localPeerConnection.createDataChannel("chat")
     @localPeerConnection.createOffer(@sendOffer, @failureCallback)
 
+  isConnected: =>
+    @isIceStateConnected(@localPeerConnection.iceConnectionState) and @isIceStateConnected(@remotePeerConnection.iceConnectionState)
+
+  isIceStateConnected: (state) =>
+    state is "connected" or state is "completed"
+
   successCallback: (args...) =>
     console.log("PeerConnectionWrapper.successCallback: #{args}")
 

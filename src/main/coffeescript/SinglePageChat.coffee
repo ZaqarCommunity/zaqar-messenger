@@ -26,7 +26,6 @@ class SinglePageChat
   constructor: (@sendButton = $("send"), @connectButton = $("connect"), @messageField = $("message"), @logArea = $("messagesLog")) ->
     @sendButton.addEventListener("click", @sendMessageFromField)
     @connectButton.addEventListener("click", @connect)
-    @connected = false
     lp = new RTCPeerConnection(null)
     rp = new RTCPeerConnection(null)
     @localPeer = new PeerConnectionWrapper(lp, rp)
@@ -38,9 +37,8 @@ class SinglePageChat
 
   connect: =>
     @localPeer.connectPeers() #TODO untested line
-    @connected = true
 
   isConnected: =>
-    @connected
+    @localPeer.isConnected() and @remotePeer.isConnected()
 
 module.exports = SinglePageChat

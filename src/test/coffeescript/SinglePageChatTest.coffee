@@ -66,6 +66,7 @@ suite "SinglePageChatTest", ->
                                       """)
   test "begins in not connected state", ->
     assert.isFalse(spg.isConnected())
-  test "calling connect() changes connected state to true", ->
-    spg.connect()
+  test "reports connected after PeerConnectionWrapper is done", ->
+    spg.localPeer.localPeerConnection.iceConnectionState = "connected"
+    spg.localPeer.remotePeerConnection.iceConnectionState = "connected"
     assert.isTrue(spg.isConnected())

@@ -128,3 +128,22 @@ suite "PeerConnectionWrapperTest", ->
       assert.strictEqual(localConnectionSpy.createOfferCalls, 1)
       assert.isFunction(arg) for arg in localConnectionSpy.createOfferArgument
       assert.deepEqual(localConnectionSpy.createOfferArgument, [pcw.sendOffer, pcw.failureCallback])
+
+  suite "connection state", ->
+    test "should be initially false", ->
+      assert.isFalse(pcw.isConnected())
+    test "should be true when both RTCPeerConnections are connected", ->
+      localConnectionSpy.iceConnectionState = "connected"
+      remoteConnectionSpy.iceConnectionState = "connected"
+      assert.isTrue(pcw.isConnected())
+    test "should be true when both RTCPeerConnections are completed", ->
+      localConnectionSpy.iceConnectionState = "completed"
+      remoteConnectionSpy.iceConnectionState = "completed"
+      assert.isTrue(pcw.isConnected())
+    test "should be true when RTCPeerConnections are connected or completed", ->
+      localConnectionSpy.iceConnectionState = "completed"
+      remoteConnectionSpy.iceConnectionState = "connected"
+      assert.isTrue(pcw.isConnected())
+      localConnectionSpy.iceConnectionState = "connected"
+      remoteConnectionSpy.iceConnectionState = "completed"
+      assert.isTrue(pcw.isConnected())

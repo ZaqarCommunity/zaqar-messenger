@@ -24,6 +24,7 @@ class RTCPeerConnectionSpy
   createOfferCalls: 0
   createAnswerCalls: 0
   createDataChannelCalls: 0
+  iceConnectionState: "new"
 
   addIceCandidate: (args...) ->
     @addIceCandidateCalls += 1
