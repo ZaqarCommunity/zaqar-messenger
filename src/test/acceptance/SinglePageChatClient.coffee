@@ -83,7 +83,7 @@ describe "M1: Single page chat client", ->
         buttonSelector.should.have.attribute("type").that.deep.equals(["button"])
         buttonSelector.should.have.attribute("value").that.deep.equals(["Connect"])
 
-    xit "clicking connect button should establish connection", ->
+    it "clicking connect button should establish connection", ->
       casper.then ->
         @click("input#connect")
         expect("function () { return spg.isConnected() }").to.evaluate.to.true

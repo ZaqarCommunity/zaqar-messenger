@@ -66,3 +66,6 @@ suite "SinglePageChatTest", ->
                                       """)
   test "begins in not connected state", ->
     assert.isFalse(spg.isConnected())
+  test "calling connect() changes connected state to true", ->
+    spg.connect()
+    assert.isTrue(spg.isConnected())

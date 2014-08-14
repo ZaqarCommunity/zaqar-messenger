@@ -37,6 +37,8 @@ class SinglePageChat
     @messageField.value = ""
 
   connect: =>
+    @localPeer.connectPeers() #TODO untested line
+    @connected = true
 
   isConnected: =>
     @connected

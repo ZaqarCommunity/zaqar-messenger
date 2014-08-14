@@ -18,4 +18,4 @@ along with Zaquar Messenger.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
 SinglePageChat = require("./SinglePageChat")
-new SinglePageChat
+global.spg = new SinglePageChat
