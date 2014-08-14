@@ -87,7 +87,7 @@ describe "M1: Single page chat client", ->
       casper.then ->
         expect("function () { return spg.isConnected() }").to.evaluate.to.false
 
-    it "clicking connect button should establish connection", ->
+    xit "clicking connect button should establish connection", ->
       casper.then ->
         @click("input#connect")
         expect("function () { return spg.isConnected() }").to.evaluate.to.true
