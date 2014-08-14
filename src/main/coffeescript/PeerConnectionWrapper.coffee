@@ -47,7 +47,7 @@ class PeerConnectionWrapper
 
   connectPeers: =>
     @localPeerConnection.createDataChannel("chat")
-    @localPeerConnection.createOffer(@sendOffer)
+    @localPeerConnection.createOffer(@sendOffer, @failureCallback)
 
   successCallback: =>
 
