@@ -41,11 +41,20 @@ suite "PeerConnectionWrapperTest", ->
     assert.isFunction(localConnectionSpy.ondatachannel)
     assert.isFunction(pcw.setupDataChannel)
     assert.deepEqual(pcw.setupDataChannel, localConnectionSpy.ondatachannel)
-  test "should have a success callback function", ->
-    assert.isFunction(pcw.successCallback)
-  test "should have a failure callback function", ->
-    assert.isFunction(pcw.failureCallback)
-    assert.strictEqual(pcw.failureCallback("error"), "error")
+
+  suite "success/error callbacks", ->
+    test "should have a success callback function", ->
+      assert.isFunction(pcw.successCallback)
+    test "success callback should log its arguments", ->
+      pcw.successCallback({success: true})
+      #TODO Mock console.log() and assert this
+    test "should have a failure callback function", ->
+      assert.isFunction(pcw.failureCallback)
+    test "failure callback should log its arguments", ->
+      pcw.failureCallback({success: false})
+      #TODO Mock console.error() and assert this
+    test "failure callback should return its arguments", ->
+      assert.strictEqual(pcw.failureCallback("error"), "error")
 
   suite "signalIceCandidate", ->
     candidateEvent = {candidate: "candidate"}

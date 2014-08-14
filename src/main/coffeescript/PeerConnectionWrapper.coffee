@@ -49,10 +49,11 @@ class PeerConnectionWrapper
     @localPeerConnection.createDataChannel("chat")
     @localPeerConnection.createOffer(@sendOffer, @failureCallback)
 
-  successCallback: =>
+  successCallback: (args...) =>
+    console.log("PeerConnectionWrapper.successCallback: #{args}")
 
   failureCallback: (error) =>
-    console.error(error)
+    console.error("PeerConnectionWrapper.failureCallback: #{error}")
     return error
 
 module.exports = PeerConnectionWrapper
