@@ -33,9 +33,9 @@ class RTCPeerConnectionSpy
     @setLocalDescriptionCalls += 1
     @setLocalDescriptionArgument = args
 
-  setRemoteDescription: (arg) ->
+  setRemoteDescription: (args...) ->
     @setRemoteDescriptionCalls += 1
-    @setRemoteDescriptionArgument = arg
+    @setRemoteDescriptionArgument = args
 
   createOffer: (arg) ->
     @createOfferCalls += 1

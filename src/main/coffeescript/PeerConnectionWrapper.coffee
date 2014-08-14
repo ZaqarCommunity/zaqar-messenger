@@ -38,12 +38,12 @@ class PeerConnectionWrapper
 
   sendOffer: (sessionDescription) =>
     @localPeerConnection.setLocalDescription(sessionDescription, @successCallback, @failureCallback)
-    @remotePeerConnection.setRemoteDescription(sessionDescription)
+    @remotePeerConnection.setRemoteDescription(sessionDescription, @successCallback, @failureCallback)
     @remotePeerConnection.createAnswer(@sendAnswer)
 
   sendAnswer: (sessionDescription) =>
     @remotePeerConnection.setLocalDescription(sessionDescription, @successCallback, @failureCallback)
-    @localPeerConnection.setRemoteDescription(sessionDescription)
+    @localPeerConnection.setRemoteDescription(sessionDescription, @successCallback, @failureCallback)
 
   connectPeers: =>
     @localPeerConnection.createDataChannel("chat")

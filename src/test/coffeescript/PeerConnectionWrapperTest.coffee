@@ -79,7 +79,7 @@ suite "PeerConnectionWrapperTest", ->
     test "should call setRemoteDescription on remote connection", ->
       pcw.sendOffer(sdp)
       assert.strictEqual(remoteConnectionSpy.setRemoteDescriptionCalls, 1)
-      assert.strictEqual(remoteConnectionSpy.setRemoteDescriptionArgument, sdp)
+      assert.deepEqual(remoteConnectionSpy.setRemoteDescriptionArgument, [sdp, pcw.successCallback, pcw.failureCallback])
     test "should call createAnswer on remote connection", ->
       pcw.sendOffer(sdp)
       assert.strictEqual(remoteConnectionSpy.createAnswerCalls, 1)
@@ -94,7 +94,7 @@ suite "PeerConnectionWrapperTest", ->
     test "should call setRemoteDescription on local connection", ->
       pcw.sendAnswer(sdp)
       assert.strictEqual(localConnectionSpy.setRemoteDescriptionCalls, 1)
-      assert.strictEqual(localConnectionSpy.setRemoteDescriptionArgument, sdp)
+      assert.deepEqual(localConnectionSpy.setRemoteDescriptionArgument, [sdp, pcw.successCallback, pcw.failureCallback])
 
   suite "send/receive messages", ->
     test "receiveMessage should print message data", ->
