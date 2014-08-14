@@ -29,9 +29,9 @@ class RTCPeerConnectionSpy
     @addIceCandidateCalls += 1
     @addIceCandidateArgument = arg
 
-  setLocalDescription: (arg) ->
+  setLocalDescription: (args...) ->
     @setLocalDescriptionCalls += 1
-    @setLocalDescriptionArgument = arg
+    @setLocalDescriptionArgument = args
 
   setRemoteDescription: (arg) ->
     @setRemoteDescriptionCalls += 1

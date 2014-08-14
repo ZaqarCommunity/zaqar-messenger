@@ -37,16 +37,22 @@ class PeerConnectionWrapper
     @dataChannel.send(text)
 
   sendOffer: (sessionDescription) =>
-    @localPeerConnection.setLocalDescription(sessionDescription)
+    @localPeerConnection.setLocalDescription(sessionDescription, @successCallback, @failureCallback)
     @remotePeerConnection.setRemoteDescription(sessionDescription)
     @remotePeerConnection.createAnswer(@sendAnswer)
 
   sendAnswer: (sessionDescription) =>
-    @remotePeerConnection.setLocalDescription(sessionDescription)
+    @remotePeerConnection.setLocalDescription(sessionDescription, @successCallback, @failureCallback)
     @localPeerConnection.setRemoteDescription(sessionDescription)
 
   connectPeers: =>
     @localPeerConnection.createDataChannel("chat")
     @localPeerConnection.createOffer(@sendOffer)
+
+  successCallback: =>
+
+  failureCallback: (error) =>
+    console.error(error)
+    return error
 
 module.exports = PeerConnectionWrapper

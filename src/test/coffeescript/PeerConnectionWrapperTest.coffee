@@ -41,6 +41,11 @@ suite "PeerConnectionWrapperTest", ->
     assert.isFunction(localConnectionSpy.ondatachannel)
     assert.isFunction(pcw.setupDataChannel)
     assert.deepEqual(pcw.setupDataChannel, localConnectionSpy.ondatachannel)
+  test "should have a success callback function", ->
+    assert.isFunction(pcw.successCallback)
+  test "should have a failure callback function", ->
+    assert.isFunction(pcw.failureCallback)
+    assert.strictEqual(pcw.failureCallback("error"), "error")
 
   suite "signalIceCandidate", ->
     candidateEvent = {candidate: "candidate"}
@@ -70,7 +75,7 @@ suite "PeerConnectionWrapperTest", ->
     test "should call setLocalDescription on local connection", ->
       pcw.sendOffer(sdp)
       assert.strictEqual(localConnectionSpy.setLocalDescriptionCalls, 1)
-      assert.strictEqual(localConnectionSpy.setLocalDescriptionArgument, sdp)
+      assert.deepEqual(localConnectionSpy.setLocalDescriptionArgument, [sdp, pcw.successCallback, pcw.failureCallback])
     test "should call setRemoteDescription on remote connection", ->
       pcw.sendOffer(sdp)
       assert.strictEqual(remoteConnectionSpy.setRemoteDescriptionCalls, 1)
@@ -85,7 +90,7 @@ suite "PeerConnectionWrapperTest", ->
     test "should call setLocalDescription on remote connection", ->
       pcw.sendAnswer(sdp)
       assert.strictEqual(remoteConnectionSpy.setLocalDescriptionCalls, 1)
-      assert.strictEqual(remoteConnectionSpy.setLocalDescriptionArgument, sdp)
+      assert.deepEqual(remoteConnectionSpy.setLocalDescriptionArgument, [sdp, pcw.successCallback, pcw.failureCallback])
     test "should call setRemoteDescription on local connection", ->
       pcw.sendAnswer(sdp)
       assert.strictEqual(localConnectionSpy.setRemoteDescriptionCalls, 1)
