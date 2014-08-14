@@ -58,7 +58,7 @@ suite "PeerConnectionWrapperTest", ->
       assert.strictEqual(remoteConnectionSpy.addIceCandidateCalls, 1)
     test "should call addIceCandidate with candidate in event", ->
       pcw.signalIceCandidate(candidateEvent)
-      assert.strictEqual(remoteConnectionSpy.addIceCandidateArgument, candidateEvent.candidate)
+      assert.deepEqual(remoteConnectionSpy.addIceCandidateArgument, [candidateEvent.candidate, pcw.successCallback, pcw.failureCallback])
 
   suite "setupDataChannel", ->
     channelEvent = {channel: {onmessage: "empty"}}

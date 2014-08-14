@@ -24,7 +24,7 @@ class PeerConnectionWrapper
 
   signalIceCandidate: (event) =>
     if (event.candidate)
-      @remotePeerConnection.addIceCandidate(event.candidate)
+      @remotePeerConnection.addIceCandidate(event.candidate, @successCallback, @failureCallback)
 
   setupDataChannel: (event) =>
     @dataChannel = event.channel

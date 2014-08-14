@@ -25,9 +25,9 @@ class RTCPeerConnectionSpy
   createAnswerCalls: 0
   createDataChannelCalls: 0
 
-  addIceCandidate: (arg) ->
+  addIceCandidate: (args...) ->
     @addIceCandidateCalls += 1
-    @addIceCandidateArgument = arg
+    @addIceCandidateArgument = args
 
   setLocalDescription: (args...) ->
     @setLocalDescriptionCalls += 1
