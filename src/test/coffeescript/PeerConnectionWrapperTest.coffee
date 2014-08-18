@@ -123,6 +123,12 @@ suite "PeerConnectionWrapperTest", ->
       pcw.connectPeers()
       assert.strictEqual(localConnectionSpy.createDataChannelCalls, 1)
       assert.strictEqual(localConnectionSpy.createDataChannelArgument, "chat")
+    test "should store created data channel", ->
+      dataChannelSpy = new DataChannelSpy()
+      localConnectionSpy.setDataChannel(dataChannelSpy)
+      pcw.connectPeers()
+      assert.instanceOf(pcw.dataChannel, DataChannelSpy)
+      assert.deepEqual(pcw.dataChannel, dataChannelSpy)
     test "should call createOffer on local connection with callbacks", ->
       pcw.connectPeers()
       assert.strictEqual(localConnectionSpy.createOfferCalls, 1)

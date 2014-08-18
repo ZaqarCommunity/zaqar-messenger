@@ -25,6 +25,7 @@ class RTCPeerConnectionSpy
   createAnswerCalls: 0
   createDataChannelCalls: 0
   iceConnectionState: "new"
+  dataChannel: null
 
   addIceCandidate: (args...) ->
     @addIceCandidateCalls += 1
@@ -49,5 +50,9 @@ class RTCPeerConnectionSpy
   createDataChannel: (arg) ->
     @createDataChannelCalls += 1
     @createDataChannelArgument = arg
+    return @dataChannel
+
+  setDataChannel: (dc) ->
+    @dataChannel = dc
 
 module.exports = RTCPeerConnectionSpy

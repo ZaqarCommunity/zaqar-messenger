@@ -46,7 +46,7 @@ class PeerConnectionWrapper
     @localPeerConnection.setRemoteDescription(sessionDescription, @successCallback, @failureCallback)
 
   connectPeers: =>
-    @localPeerConnection.createDataChannel("chat")
+    @dataChannel = @localPeerConnection.createDataChannel("chat")
     @localPeerConnection.createOffer(@sendOffer, @failureCallback)
 
   isConnected: =>
