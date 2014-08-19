@@ -25,11 +25,14 @@ FieldSpy = require("./FieldSpy")
 RTCPeerConnectionSpy = require("./RTCPeerConnectionSpy")
 
 suite "SinglePageChatTest", ->
-  sendButton = new ButtonSpy
-  connectButton = new ButtonSpy
-  messageField = new FieldSpy
-  logArea = new FieldSpy
-  spg = new SinglePageChat(sendButton, connectButton, messageField, logArea)
+  sendButton = connectButton = messageField = logArea = spg = null
+
+  setup ->
+    sendButton = new ButtonSpy()
+    connectButton = new ButtonSpy()
+    messageField = new FieldSpy()
+    logArea = new FieldSpy()
+    spg = new SinglePageChat(sendButton, connectButton, messageField, logArea)
 
   suite "before connection", ->
 
@@ -55,6 +58,8 @@ suite "SinglePageChatTest", ->
       assert.isFalse(spg.isConnected())
 
   suite "when connected", ->
+    setup ->
+      spg.connect()
 
     test "sendMessageFromField() should clear message field's value", ->
       messageField.value = "text message"
