@@ -23,5 +23,8 @@ class DataChannelSpy
   send: (arg) ->
     @sendCalls += 1
     @sendArgument = arg
+    @onmessage({data: arg})
+
+  onmessage: ->
 
 module.exports = DataChannelSpy
