@@ -30,43 +30,47 @@ suite "SinglePageChatTest", ->
   messageField = new FieldSpy
   logArea = new FieldSpy
   spg = new SinglePageChat(sendButton, connectButton, messageField, logArea)
-  test "constructor registers sendMessageFromField() for click event", ->
-    assert.isFunction(sendButton.getEventListener())
-    assert.strictEqual(sendButton.getEventListener(), spg.sendMessageFromField)
-    assert.strictEqual(sendButton.getEventType(), "click")
-  test "constructor registers connect() for click event", ->
-    assert.isFunction(connectButton.getEventListener())
-    assert.strictEqual(connectButton.getEventListener(), spg.connect)
-    assert.strictEqual(connectButton.getEventType(), "click")
-  test "constructor should create two connection wrappers around two RTCPeerConnections", ->
-    assert.instanceOf(spg.localPeer, PeerConnectionWrapper)
-    assert.instanceOf(spg.remotePeer, PeerConnectionWrapper)
-    assert.instanceOf(spg.localPeer.localPeerConnection, RTCPeerConnectionSpy)
-    assert.instanceOf(spg.localPeer.remotePeerConnection, RTCPeerConnectionSpy)
-    assert.instanceOf(spg.remotePeer.localPeerConnection, RTCPeerConnectionSpy)
-    assert.instanceOf(spg.remotePeer.remotePeerConnection, RTCPeerConnectionSpy)
-  test "sendMessageFromField() should clear message field's value", ->
-    messageField.value = "text message"
-    spg.sendMessageFromField()
-    assert.strictEqual(messageField.value, "")
-  test "sendMessageFromField() should append message to log", ->
-    logArea.value = "message 1"
-    messageField.value = "message 2"
-    spg.sendMessageFromField()
-    assert.strictEqual(logArea.value, """
-                                      message 1
-                                      message 2
-                                      """)
-  test "sendMessageFromField() should append nothing when message is empty", ->
-    logArea.value = "message 1"
-    messageField.value = ""
-    spg.sendMessageFromField()
-    assert.strictEqual(logArea.value, """
-                                      message 1
-                                      """)
-  test "begins in not connected state", ->
-    assert.isFalse(spg.isConnected())
-  test "reports connected after PeerConnectionWrapper is done", ->
-    spg.localPeer.localPeerConnection.iceConnectionState = "connected"
-    spg.localPeer.remotePeerConnection.iceConnectionState = "connected"
-    assert.isTrue(spg.isConnected())
+
+  suite "before connection", ->
+    test "constructor registers sendMessageFromField() for click event", ->
+      assert.isFunction(sendButton.getEventListener())
+      assert.strictEqual(sendButton.getEventListener(), spg.sendMessageFromField)
+      assert.strictEqual(sendButton.getEventType(), "click")
+    test "constructor registers connect() for click event", ->
+      assert.isFunction(connectButton.getEventListener())
+      assert.strictEqual(connectButton.getEventListener(), spg.connect)
+      assert.strictEqual(connectButton.getEventType(), "click")
+    test "constructor should create two connection wrappers around two RTCPeerConnections", ->
+      assert.instanceOf(spg.localPeer, PeerConnectionWrapper)
+      assert.instanceOf(spg.remotePeer, PeerConnectionWrapper)
+      assert.instanceOf(spg.localPeer.localPeerConnection, RTCPeerConnectionSpy)
+      assert.instanceOf(spg.localPeer.remotePeerConnection, RTCPeerConnectionSpy)
+      assert.instanceOf(spg.remotePeer.localPeerConnection, RTCPeerConnectionSpy)
+      assert.instanceOf(spg.remotePeer.remotePeerConnection, RTCPeerConnectionSpy)
+    test "begins in not connected state", ->
+      assert.isFalse(spg.isConnected())
+
+  suite "when connected", ->
+    test "sendMessageFromField() should clear message field's value", ->
+      messageField.value = "text message"
+      spg.sendMessageFromField()
+      assert.strictEqual(messageField.value, "")
+    test "sendMessageFromField() should append message to log", ->
+      logArea.value = "message 1"
+      messageField.value = "message 2"
+      spg.sendMessageFromField()
+      assert.strictEqual(logArea.value, """
+                                        message 1
+                                        message 2
+                                        """)
+    test "sendMessageFromField() should append nothing when message is empty", ->
+      logArea.value = "message 1"
+      messageField.value = ""
+      spg.sendMessageFromField()
+      assert.strictEqual(logArea.value, """
+                                        message 1
+                                        """)
+    test "reports connected after PeerConnectionWrapper is done", ->
+      spg.localPeer.localPeerConnection.iceConnectionState = "connected"
+      spg.localPeer.remotePeerConnection.iceConnectionState = "connected"
+      assert.isTrue(spg.isConnected())
