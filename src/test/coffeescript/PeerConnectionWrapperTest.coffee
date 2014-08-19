@@ -158,3 +158,15 @@ suite "PeerConnectionWrapperTest", ->
       localConnectionSpy.iceConnectionState = "connected"
       remoteConnectionSpy.iceConnectionState = "completed"
       assert.isTrue(pcw.isConnected())
+
+  suite "fake data channels", ->
+    test "message received on second PCW should be equal to message sent by first PCW", ->
+      pcw2 = new PeerConnectionWrapper(remoteConnectionSpy, localConnectionSpy)
+      dataChannel = new DataChannelSpy()
+      localConnectionSpy.setDataChannel(dataChannel)
+      receivedMessage = ""
+      pcw2.setupDataChannel({channel: dataChannel})
+      pcw2.handleMessageData = (data) -> receivedMessage = data
+      pcw.connectPeers()
+      pcw.sendMessage("test message")
+      assert.strictEqual(receivedMessage, "test message")
