@@ -117,6 +117,11 @@ suite "PeerConnectionWrapperTest", ->
       pcw.sendMessage("test message")
       assert.strictEqual(dataChannelSpy.sendCalls, 1)
       assert.strictEqual(dataChannelSpy.sendArgument, "test message")
+    test "receiveMessage should call message data handler with data", ->
+      receivedMessage = ""
+      pcw.handleMessageData = (data) -> receivedMessage = data
+      pcw.receiveMessage({data: "test message"})
+      assert.strictEqual(receivedMessage, "test message")
 
   suite "connectPeers", ->
     test "should call createDataChannel on local connection with channel name", ->

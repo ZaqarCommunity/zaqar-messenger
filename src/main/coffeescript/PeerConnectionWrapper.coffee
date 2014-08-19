@@ -32,6 +32,9 @@ class PeerConnectionWrapper
 
   receiveMessage: (event) =>
     console.log("received message: #{event.data}")
+    @handleMessageData(event.data)
+
+  handleMessageData: ->
 
   sendMessage: (text) =>
     @dataChannel.send(text)
