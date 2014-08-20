@@ -33,7 +33,7 @@ class SinglePageChat
     @remotePeer.handleMessageData = @receiveMessageInLogArea
 
   sendMessageFromField: =>
-    @logArea.value += "\n#{@messageField.value}" unless @messageField.value.length is 0
+    @localPeer.sendMessage(@messageField.value) unless @messageField.value.length is 0
     @messageField.value = ""
 
   receiveMessageInLogArea: (message) =>

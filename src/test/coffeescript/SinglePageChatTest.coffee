@@ -23,6 +23,7 @@ SinglePageChat = require("../../main/coffeescript/SinglePageChat")
 ButtonSpy = require("./ButtonSpy")
 FieldSpy = require("./FieldSpy")
 RTCPeerConnectionSpy = require("./RTCPeerConnectionSpy")
+DataChannelSpy = require("./DataChannelSpy")
 
 suite "SinglePageChatTest", ->
   sendButton = connectButton = messageField = logArea = spg = null
@@ -62,8 +63,12 @@ suite "SinglePageChatTest", ->
       assert.isFalse(spg.isConnected())
 
   suite "when connected", ->
+    dataChannel = null
     setup ->
+      dataChannel = new DataChannelSpy()
+      spg.localPeer.localPeerConnection.setDataChannel(dataChannel)
       spg.connect()
+      spg.remotePeer.setupDataChannel({channel: dataChannel})
 
     test "sendMessageFromField() should clear message field's value", ->
       messageField.value = "text message"
@@ -86,6 +91,17 @@ suite "SinglePageChatTest", ->
       assert.strictEqual(logArea.value, """
                                         message 1
                                         """)
+
+    test "sendMessageFromField() should call PeerConnectionWrapper.sendMessage()", ->
+      messageField.value = "text message"
+      spg.sendMessageFromField()
+      assert.strictEqual(dataChannel.sendCalls, 1)
+      assert.strictEqual(dataChannel.sendArgument, "text message")
+
+    test "sendMessageFromField() should not call PeerConnectionWrapper.sendMessage() when message is empty", ->
+      messageField.value = ""
+      spg.sendMessageFromField()
+      assert.strictEqual(dataChannel.sendCalls, 0)
 
     test "receiveMessageInLogArea() should append message to log", ->
       logArea.value = "message 1"
