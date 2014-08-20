@@ -30,6 +30,7 @@ class SinglePageChat
     rp = new RTCPeerConnection(null)
     @localPeer = new PeerConnectionWrapper(lp, rp)
     @remotePeer = new PeerConnectionWrapper(rp, lp)
+    @remotePeer.handleMessageData = @receiveMessageInLogArea
 
   sendMessageFromField: =>
     @logArea.value += "\n#{@messageField.value}" unless @messageField.value.length is 0

@@ -54,6 +54,10 @@ suite "SinglePageChatTest", ->
       assert.instanceOf(spg.remotePeer.localPeerConnection, RTCPeerConnectionSpy)
       assert.instanceOf(spg.remotePeer.remotePeerConnection, RTCPeerConnectionSpy)
 
+    test "constructor should set remote RTCPeerConnection.handleMessageData", ->
+      assert.isFunction(spg.remotePeer.handleMessageData)
+      assert.strictEqual(spg.remotePeer.handleMessageData, spg.receiveMessageInLogArea)
+
     test "begins in not connected state", ->
       assert.isFalse(spg.isConnected())
 
