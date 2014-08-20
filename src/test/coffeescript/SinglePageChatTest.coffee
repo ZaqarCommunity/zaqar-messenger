@@ -83,6 +83,14 @@ suite "SinglePageChatTest", ->
                                         message 1
                                         """)
 
+    test "receiveMessageInLogArea() should append message to log", ->
+      logArea.value = "message 1"
+      spg.receiveMessageInLogArea("message 2")
+      assert.strictEqual(logArea.value, """
+                                        message 1
+                                        message 2
+                                        """)
+
     test "reports connected after PeerConnectionWrapper is done", ->
       spg.localPeer.localPeerConnection.iceConnectionState = "connected"
       spg.localPeer.remotePeerConnection.iceConnectionState = "connected"

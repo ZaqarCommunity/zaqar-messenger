@@ -35,6 +35,9 @@ class SinglePageChat
     @logArea.value += "\n#{@messageField.value}" unless @messageField.value.length is 0
     @messageField.value = ""
 
+  receiveMessageInLogArea: (message) =>
+    @logArea.value += "\n#{message}"
+
   connect: =>
     @localPeer.connectPeers() #TODO untested line
 
