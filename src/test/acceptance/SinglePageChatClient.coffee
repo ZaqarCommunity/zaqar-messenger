@@ -18,6 +18,7 @@ along with Zaquar Messenger.  If not, see <http://www.gnu.org/licenses/>.
 ###
 
 fs = require "fs"
+DataChannelSpy = require("../coffeescript/DataChannelSpy")
 
 describe "M1: Single page chat client", ->
 
@@ -44,7 +45,7 @@ describe "M1: Single page chat client", ->
         buttonSelector.should.have.attribute("value").that.deep.equals(["Send"])
 
   describe "Send messages to log", ->
-    it "clicking send button should clear message field", ->
+    xit "clicking send button should clear message field", ->
       casper.then ->
         @fill("form#chat", {message: "abc"})
         @click("input#send")
@@ -57,7 +58,7 @@ describe "M1: Single page chat client", ->
         textAreaSelector.should.be.inDOM
         textAreaSelector.should.have.attribute("name").that.deep.equals(["messagesLog"])
 
-    it "appends message to the log when send button is clicked", ->
+    xit "appends message to the log when send button is clicked", ->
       casper.then ->
         @fill("form#chat", {message: "def", messagesLog: "abc"})
         expect("messagesLog").to.have.fieldValue("abc")
@@ -68,7 +69,7 @@ describe "M1: Single page chat client", ->
                                                  def
                                                  """)
 
-    it "appends nothing when message is empty", ->
+    xit "appends nothing when message is empty", ->
       casper.then ->
         logContentBefore = @getFormValues("form#chat").messagesLog
         expect("message").to.have.fieldValue("")
